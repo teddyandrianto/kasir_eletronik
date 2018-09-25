@@ -25,8 +25,8 @@
                   <td>1002918278</td>
                   <td>TV LCD 21" POLYTRON</td>
                   <td>16</td>
-                  <td>2.500.000</td>
-                  <td>2.500.000</td>
+                  <td>3.500.000</td>
+                  <td>3.500.000</td>
                   <td><center>
                     <button class="btn btn-warning btn-xs"><i class="fa fa-edit"></i></button>
                     <a class="btn btn-danger btn-xs" href=""><i class="fa fa-times"></i></a></center></td>
