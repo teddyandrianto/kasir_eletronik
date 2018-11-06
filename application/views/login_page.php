@@ -39,7 +39,7 @@
                       <div class="tab-content ">
                           <div class="tab-pane active in" id="login">
                             
-                            <form style="margin-top: 20px;" action="<?php echo base_url('index.php/Login/proses')?>" method= "POST" >
+                            <form style="margin-top: 20px;" action="<?php echo base_url('index.php/Landing/login')?>" method= "POST" >
                               
                               <div style="margin-bottom: 25px" class="input-group">
                                           <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>

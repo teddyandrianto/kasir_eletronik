@@ -35,14 +35,14 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
               <img src="<?php echo base_url('assets/admin/profile/not-profile-admin.png') ?>" class="user-image" alt="User Image">
-              <span class="hidden-xs">Nama admin</span>
+              <span class="hidden-xs"><?php echo $_SESSION['login']['nama_user'] ?></span>
             </a>
             <ul class="dropdown-menu">
               <li class="user-header">
                 <img src="<?php echo base_url('assets/admin/profile/not-profile-admin.png') ?>" class="img-circle" alt="User Image">
                 <p>
-                  Nama Admin - Admin 
-                  <small>admin@gmail.com</small>
+                  <?php echo $_SESSION['login']['nama_user'] ?> - Admin 
+                  <small><?php echo $_SESSION['login']['telpon'] ?></small>
                 </p>
               </li>
               <li class="user-footer">
@@ -50,7 +50,7 @@
                   <a href="http://localhost/tka1/admin/setting" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="http://localhost/tka1/login/logout" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="<?php echo base_url('landing') ?>/logout" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -66,7 +66,7 @@
             <img src="<?php echo base_url('assets');?>/admin/profile/not-profile-admin.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Nama </p>
+          <p><?php echo $_SESSION['login']['nama_user'] ?></p>
           <a href="<?php echo base_url('admin/setting') ?>"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
