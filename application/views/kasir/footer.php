@@ -11,7 +11,7 @@
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
-</div>
+
 
 <script src="<?php echo base_url('assets/admin')?>/js/bootstrap.min.js"></script>
   <script src="<?php echo base_url()?>assets/admin/jquery/npm.js"></script>
@@ -25,6 +25,7 @@
 } );
 </script>
 
+   <?=$this->session->flashdata('pesan')?>      
 
 </body>
 </html>

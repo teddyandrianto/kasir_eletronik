@@ -93,4 +93,3 @@
     </section>
   </aside>
 
-   <?=$this->session->flashdata('pesan')?>   
