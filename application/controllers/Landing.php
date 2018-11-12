@@ -19,8 +19,14 @@ class Landing extends CI_Controller {
 	public function login()
  	{
  		if($this->Login_model->verivikasi_login()){
-         	redirect('admin/index');
-        }else{
+        if($_SESSION['login']['status']==1){
+          redirect('admin/index');
+        }elseif($_SESSION['login']['status']==2){
+         	redirect('manager/index');
+        }elseif($_SESSION['login']['status']==3){
+          redirect('kasir/index');
+        }
+      }else{
                   $this->session->set_flashdata("pesan", "<div class=\"col-lg-4 col-lg-offset-4\"><div class=\"alert alert-danger\">
     <a  class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>
         <strong>Oops!</strong><br> Username/password yang Anda Masukan Salah<br><b>Atau Akun Belum Terdaftar !</b>
