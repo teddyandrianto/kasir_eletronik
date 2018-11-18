@@ -1,5 +1,5 @@
 <?php 
-class Admin_model extends CI_Model {
+class Kasir_model extends CI_Model {
 	public function __construct()
 	{
 		$this->load->database();
@@ -20,19 +20,13 @@ class Admin_model extends CI_Model {
 		return $res;
 	}
 
-	public function getbarang(){
-		$this->db->select('*');
-		$this->db->from('tbl_barang');
-		$this->db->order_by("id_barang", "DESC");
-		$query = $this->db->get();
-		return $query->result();
-	}
+	public function get_autocomplete($search_data)
+        {
+                $this->db->select('*');
+                $this->db->like('barcode', $search_data);
+                 $this->db->or_like('nama_barang', $search_data);
+                return $this->db->get('tbl_barang', 10)->result();
+        }
 
-	public function getpegawai(){
-		$this->db->select('*');
-		$this->db->from('tbl_user');
-		$this->db->order_by("id_user", "DESC");
-		$query = $this->db->get();
-		return $query->result();
-	}
+	
 }
