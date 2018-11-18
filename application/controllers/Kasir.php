@@ -13,13 +13,17 @@ class Kasir extends CI_Controller {
 
 	public function index()
 	{
+		if($_SESSION['login']['status']=='3'){
 		$this->load->view('kasir/header');
 		$this->load->view('kasir/dashboard');
 		$this->load->view('kasir/footer');
+		}else{
+	 	$this->load->view('landing/login');
+ 		}
 	}
 
 	public function caribarang($id_transaksi){
-               if(isset($_SESSION['login'])){
+               if($_SESSION['login']['status']=='3'){
 
                 $search_data = $this->input->post('search_data');
 
@@ -58,7 +62,7 @@ class Kasir extends CI_Controller {
     }
 
     public function input_barang($id_transaksi){
-	 	if(isset($_SESSION['login'])){
+	 	if($_SESSION['login']['status']=='3'){
         $id_transaksi =$id_transaksi;
 		$id_barang= $_POST['id_barang'];
 		$harga_beli=$_POST['harga_beli'];
@@ -96,7 +100,7 @@ class Kasir extends CI_Controller {
 	}
 
 	public function input_transaksi($id_transaksi,$total){
- 		if(isset($_SESSION['login'])){
+ 		if($_SESSION['login']['status']=='3'){
 			$id_user = $_SESSION['login']['id_user'];
 			$nama_pembeli = $_POST['nama_pembeli'];
 			$tanggal = date("Y-m-d h:i:sa");
@@ -134,6 +138,72 @@ class Kasir extends CI_Controller {
 		}else{
 	 		$this->load->view('landing/index');
  		}
+	}
+
+	public function hapus_beli($id_detail_tr){
+		if($_SESSION['login']['status']=='3'){
+		$data = $this->db->query("SELECT * FROM tbl_detail_transaksi WHERE id_detail_tr=".$id_detail_tr."")->row();
+		$jumlah = $data->jumlah;
+		$id_barang = $data->id_barang;
+
+	 	$where = array('id_detail_tr' => $id_detail_tr);
+	 	$res = $this->Kasir_model->delete('tbl_detail_transaksi',$where);
+	 	if($res>=1){
+	 		$data2 = $this->db->query("SELECT * FROM tbl_barang WHERE id_barang=".$id_barang."")->row();
+	 		$stok = $data2->stok;
+	 		$updatedata = array(
+			'stok' => $stok+$jumlah
+			);
+	 		$where = array('id_barang'=>$id_barang);
+	 		$res = $this->Kasir_model->update('tbl_barang',$updatedata,$where);
+	 		if($res>=1){
+	 		redirect('kasir');
+	 		}else{
+	 		redirect('kasir/index');	
+	 		}
+	 	}else{
+	 		echo "gagal delete";
+	 	}
+	 	}else{
+	 	$this->load->view("landing/index");
+ 		}
+	}
+
+	public function batal_transaksi($id_transaksi){
+		if($_SESSION['login']['status']=='3'){
+			$updatedata = array(
+				'status' => '0',
+				
+				);
+			$where = array('id_transaksi'=>$id_transaksi);
+			$res = $this->Kasir_model->update('tbl_transaksi',$updatedata,$where);
+			if($res>=1){
+	 			
+					$data = $this->db->query("SELECT * FROM tbl_detail_transaksi WHERE id_transaksi='".$id_transaksi."'")->result_array();
+					foreach ($data as $d) {
+					$id_barang = $d['id_barang'];
+					$jumlah = $d['jumlah'];
+	 				$data2 = $this->db->query("SELECT * FROM tbl_barang WHERE id_barang=".$id_barang."")->row();
+	 				$stok = $data2->stok;
+	 				$updatedata = array(
+						'stok' => $stok+$jumlah
+						);
+	 				$where = array('id_barang'=>$id_barang);
+	 				$res = $this->Kasir_model->update('tbl_barang',$updatedata,$where);
+	 				$where = array('id_transaksi' => $id_transaksi);
+	 			    $res = $this->Kasir_model->delete('tbl_detail_transaksi',$where);
+	 			        
+	 				}
+
+	 				redirect('Kasir/index');
+
+	 		}else{
+	 					redirect('Kasir/index');
+	 				
+			}
+		}else{
+			$this->load->view("landing/login");
+		}
 	}
 
 }
