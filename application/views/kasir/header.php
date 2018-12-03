@@ -18,6 +18,7 @@
   <script src="<?php echo base_url('assets/admin')?>/js/jquery-2.2.3.min.js"></script>
   <script src="<?php echo base_url('assets/admin')?>/js/app.js"></script>
 
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -37,22 +38,22 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
               <img src="<?php echo base_url('assets/admin/profile/not-profile-admin.png') ?>" class="user-image" alt="User Image">
-              <span class="hidden-xs">Nama Kasir</span>
+              <span class="hidden-xs"><?=$_SESSION['login']['nama_user']?></span>
             </a>
             <ul class="dropdown-menu">
               <li class="user-header">
                 <img src="<?php echo base_url('assets/admin/profile/not-profile-admin.png') ?>" class="img-circle" alt="User Image">
                 <p>
-                  Nama Kasir - Kasir 
-                  <small>kasir@gmail.com</small>
+                  <?=$_SESSION['login']['nama_user']?> - Kasir 
+                  <small><?=$_SESSION['login']['telpon']?></small>
                 </p>
               </li>
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="http://localhost/tka1/admin/setting" class="btn btn-default btn-flat">Profile</a>
+                  <a href="<?=base_url('kasir/profile') ?>" class="btn btn-default btn-flat">Profil</a>
                 </div>
                 <div class="pull-right">
-                  <a href="http://localhost/tka1/login/logout" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="<?php echo base_url('landing/logout') ?>" class="btn btn-default btn-flat">Logout</a>
                 </div>
               </li>
             </ul>
@@ -68,7 +69,7 @@
             <img src="<?php echo base_url('assets');?>/admin/profile/not-profile-admin.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Nama </p>
+          <p><?=$_SESSION['login']['nama_user']?> </p>
           <a href="<?php echo base_url('admin/setting') ?>"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -80,16 +81,21 @@
           </a>
         </li>
          <li>
-          <a href="<?php echo base_url('kasir') ?>">
+          <a href="<?php echo base_url('kasir/histori_transaksi') ?>">
             <i class="fa fa-history"></i> <span>Histori Transaksi</span>
           </a>
         </li>
+        <li class="header">MAIN PROFIL</li>
         <li>
-          <a href="<?php echo base_url('kasir') ?>">
-            <i class="fa fa-user"></i> <span>Profil</span>
+          <a href="<?php echo base_url('kasir/profile') ?>">
+            <i class="fa fa-cog"></i> <span>Profil</span>
+          </a>
+        </li>
+         <li>
+          <a href="<?php echo base_url('landing/logout') ?>">
+            <i class="fa fa-sign-out"></i> <span>Logout</span>
           </a>
         </li>
       </ul>
     </section>
   </aside>
-

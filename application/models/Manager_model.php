@@ -38,7 +38,6 @@ class Manager_model extends CI_Model {
 	public function getbarang(){
 		$this->db->select('*');
 		$this->db->from('tbl_barang');
-		$this->db->where('stok<=','5');
 		$this->db->order_by("stok", "ASC");
 		$query = $this->db->get();
 		return $query->result();
@@ -49,5 +48,14 @@ class Manager_model extends CI_Model {
 		return $query->result();
 	}
 
+	public function getlaporantrxdetail($id_transaksi){
+		$query = $this->db->query("SELECT * FROM tbl_detail_transaksi JOIN tbl_barang ON tbl_detail_transaksi.id_barang=tbl_barang.id_barang WHERE id_transaksi='".$id_transaksi."'");
+		return $query->result();
+	}
+
+	public function getdetailtrx($id_transaksi){
+		$query = $this->db->query("SELECT sum(tbl_detail_transaksi.harga_jual) as total,tbl_transaksi.id_transaksi,tbl_transaksi.nama_pembeli, tbl_transaksi.tanggal,nama_user,no_telpon,bayar FROM tbl_transaksi JOIN tbl_detail_transaksi ON tbl_detail_transaksi.id_transaksi=tbl_transaksi.id_transaksi JOIN tbl_user ON tbl_user.id_user=tbl_transaksi.id_kasir WHERE tbl_transaksi.id_transaksi='".$id_transaksi."' GROUP BY tbl_transaksi.id_transaksi");
+		return $query->row();
+	}
 	
 }

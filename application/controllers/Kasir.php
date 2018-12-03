@@ -14,11 +14,11 @@ class Kasir extends CI_Controller {
 	public function index()
 	{
 		if($_SESSION['login']['status']=='3'){
-		$this->load->view('kasir/header');
-		$this->load->view('kasir/dashboard');
-		$this->load->view('kasir/footer');
+			$this->load->view('kasir/header');
+			$this->load->view('kasir/dashboard');
+			$this->load->view('kasir/footer');
 		}else{
-	 	$this->load->view('landing/login');
+	 		redirect('landing');
  		}
 	}
 
@@ -29,7 +29,6 @@ class Kasir extends CI_Controller {
 
                 $result = $this->Kasir_model->get_autocomplete($search_data);
 
-
                 if (!empty($result))
                 {
                     foreach ($result as $row):
@@ -37,10 +36,10 @@ class Kasir extends CI_Controller {
                   <tbody><tr>
                   <td>' .$row->barcode.'</td>
                   <td>' .$row->nama_barang.'</td>
-                  <td>' .$row->harga_jual.'</td>
+                  <td>' .($row->harga_jual== 0 ? '' : number_format($row->harga_jual, 0, ',', '.')).'</td>
                    <td>
                    	 <form method="POST" action="'.base_url("/kasir/input_barang").'/'.$id_transaksi.'">
-                    <input type="hidden" name="id_barang" class="col-lg-1 form-control" value="'.$row->id_barang.'" onfocus="startCalc();" onblur="stopCalc();"><input type="hidden" id="beras" name="harga_beli" class="col-lg-1 form-control" value="'.$row->harga_beli.'" onfocus="startCalc();" onblur="stopCalc();"><input type="hidden" id="beras" name="harga_jual" class="col-lg-1 form-control" value="'.$row->harga_jual.'" onfocus="startCalc();" onblur="stopCalc();"><div class="col-md-3 col-sm-6 col-xs-6"><input type="text" name="jumlah" class="form-control" value="1" onfocus="startCalc();" onblur="stopCalc();"></div>   <button type="submit" id="myenter" onclick="myFunction()" class="btn btn-success">Masukan Barang
+                    <input type="hidden" name="id_barang" class="col-lg-1 form-control" value="'.$row->id_barang.'" onfocus="startCalc();" onblur="stopCalc();"><input type="hidden" id="beras" name="harga_beli" class="col-lg-1 form-control" value="'.$row->harga_beli.'" onfocus="startCalc();" onblur="stopCalc();"><input type="hidden" id="beras" name="harga_jual" class="col-lg-1 form-control" value="'.$row->harga_jual.'" onfocus="startCalc();" onblur="stopCalc();"><div class="col-md-4 col-sm-6 col-xs-6"><input type="number" name="jumlah" class="form-control" value="1" max="'.$row->stok.'" min="1"></div>   <button type="submit" id="myenter" onclick="myFunction()" class="btn btn-success">Masukan Barang
                 <i class="fa fa-arrow-circle-right"></i></button>
                 </form>
                 </td>
@@ -56,7 +55,7 @@ class Kasir extends CI_Controller {
                     echo "<li> <em> Not found ... </em> </li>";
                 }
               }else{
-	 	$this->load->view('landing/login');
+	 	redirect('landing');
  		}
 
     }
@@ -94,13 +93,15 @@ class Kasir extends CI_Controller {
 		}}else{
 			redirect('kasir/index');
 		}}else{
-
+			redirect('landing');
 		}
 		
 	}
 
-	public function input_transaksi($id_transaksi,$total){
+	public function input_transaksi($id_transaksi,$total=""){
  		if($_SESSION['login']['status']=='3'){
+ 			$cek_barang = $this->db->query("SELECT * FROM tbl_detail_transaksi WHERE id_transaksi='".$id_transaksi."'")->row();
+ 			if($cek_barang!=''){
 			$id_user = $_SESSION['login']['id_user'];
 			$nama_pembeli = $_POST['nama_pembeli'];
 			$tanggal = date("Y-m-d h:i:sa");
@@ -135,8 +136,11 @@ class Kasir extends CI_Controller {
        			$this->session->set_flashdata("pesan", '<script> alert("Update Bulanan Gagal");</script>');
             	redirect('kasir');
         	}
+        }else{
+        	redirect('kasir');
+        }
 		}else{
-	 		$this->load->view('landing/index');
+	 		redirect('landing');
  		}
 	}
 
@@ -165,7 +169,7 @@ class Kasir extends CI_Controller {
 	 		echo "gagal delete";
 	 	}
 	 	}else{
-	 	$this->load->view("landing/index");
+	 		redirect('landing');
  		}
 	}
 
@@ -202,8 +206,97 @@ class Kasir extends CI_Controller {
 	 				
 			}
 		}else{
-			$this->load->view("landing/login");
+			redirect('landing');
 		}
 	}
+
+	public function histori_transaksi(){
+		if($_SESSION['login']['status']==3){
+			$transaksi = $this->Kasir_model->gettransaksi();
+			$this->load->view('kasir/header');
+			$this->load->view('kasir/data_history_trx',['transaksi'=>$transaksi]);
+			$this->load->view('kasir/footer');
+		}else{
+			redirect('landing');
+		}
+	}
+
+	public function histori_transaksi_detail($id_transaksi){
+		if($_SESSION['login']['status']==3){
+				$cek = $this->db->query("SELECT * FROM tbl_transaksi WHERE id_kasir='".$_SESSION['login']['id_user']."' AND id_transaksi='".$id_transaksi."'")->row();
+			if($cek){
+			$transaksi_detail = $this->Kasir_model->getlaporantrxdetail($id_transaksi);
+				$trx = $this->Kasir_model->getdetailtrx($id_transaksi);
+				$this->load->view('kasir/header');
+				$this->load->view("kasir/data_histori_detail_trx",['transaksi_detail'=>$transaksi_detail,'trx'=>$trx]);
+				$this->load->view('kasir/footer');
+			}else{
+				redirect('kasir/histori_transaksi');
+			}
+		}else{
+			redirect('landing');
+		}
+	}
+
+public function profile()
+  {
+    if($_SESSION['login']['status']==3){
+    $this->load->view('kasir/header');
+    $this->load->view('kasir/profile_kasir');
+    $this->load->view('kasir/footer');
+    }else{
+      redirect('landing');
+    }
+  }
+
+   public function update_password(){
+    if($_SESSION['login']['status']==3){
+      $password_lama=(md5($_POST['password_lama']));
+      $password_baru=$_POST['password_baru'];
+      $password_confrim=$_POST['password_confrim'];
+      if($password_lama==$_SESSION['login']['password']){
+      if($_POST['password_lama']!=$_POST['password_baru']){
+      if($password_baru==$password_confrim ){
+        $password=(md5($password_baru));
+        $updatepass = array(
+      'password' => $password,   
+      );
+      $where = array('id_user' => $_SESSION['login']['id_user']);
+      $res = $this->Kasir_model->update('tbl_user',$updatepass,$where);
+      if($res>=1){
+          $_SESSION['login']['password'] = $password;
+         $this->session->set_flashdata("pesan", '<script>
+          alert("Ubah Password Berhasil");
+            </script>');
+          redirect('kasir/profile/');
+      }else{
+          $this->session->set_flashdata("pesan", '<script>
+          alert("Ubah Password Gagal");
+            </script>');
+          redirect('kasir/profile/');
+      }
+      }else{
+      	$this->session->set_flashdata("pesan", '<script>
+          alert("Konfirmasi Password tidak valid !");
+            </script>');
+
+          redirect('kasir/profile/');
+      }
+          }else{
+          	$this->session->set_flashdata("pesan", '<script>
+          alert("Password baru Tidak boleh sama dengan password Lama !");
+            </script>');
+          redirect('kasir/profile/');
+  }
+  }else{
+  	 $this->session->set_flashdata("pesan", '<script>
+          alert("Password Lama Yang Dimasukan Salah");
+            </script>');
+          redirect('kasir/profile/');
+  }
+    }else{
+      redirect('landing');
+    }
+  } 
 
 }

@@ -13,9 +13,11 @@
                   <th>No</th>
                   <th>Waktu</th>
                   <th>No Trx</th>
-                  <th>Nama Kasir</th>
                   <th>Nama Pembeli</th>
+                  <th>Item</th>
                   <th>Total</th>
+                  <th>Bayar</th>
+                  <th>Kembalian</th>
                   <th>Aksi</th>
                 </tr>
                 </thead>
@@ -25,10 +27,12 @@
                   <td><?php echo $no++?></td>
                   <td><?php echo $t->tanggal ?></td>
                   <td><?php echo $t->id_transaksi ?></td>
-                  <td><?php echo $t->nama_user ?></td>
                   <td><?php echo $t->nama_pembeli ?></td>
-                  <td><?php echo $t->total== 0 ? '' : number_format($t->total, 0, ',', '.') ?></td>
-                  <td><center><a href="<?php echo base_url('manager/Laporan_transaksi_detail/').$t->id_transaksi ?>" class="btn btn-success btn-xs">Detail Transaksi <span class="fa fa-level-up"></span></a></center></td>
+                  <td><?php echo $t->jumlah_item ?> Barang</td>
+                  <td><?php echo $t->total ?></td>
+                  <td><?php echo $t->bayar ?></td>
+                  <td><?php echo $t->bayar-$t->total ?></td>
+                  <td><center><a href="<?php echo base_url('kasir/histori_transaksi_detail/').$t->id_transaksi ?>" class="btn btn-success btn-xs">Detail Transaksi <span class="fa fa-level-up"></span></a></center></td>
                 </tr>
               <?php } ?>
             </tbody>

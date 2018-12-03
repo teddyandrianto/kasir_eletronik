@@ -5,10 +5,6 @@
         Dashboard
         <small>Control panel</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-      </ol>
     </section>
 
     <!-- Main content -->
@@ -19,14 +15,14 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>Rp </h3>
+              <h3>Rp <?=$perolehan->hasil== 0 ? '' : number_format($perolehan->hasil, 0, ',', '.')?></h3>
 
-              <p>Keuntungan Bulan Ini</p>
+              <p>Keuntungan</p>
             </div>
             <div class="icon">
               <i class="fa fa-money"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+
           </div>
         </div>
 
@@ -34,7 +30,7 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3> 30 Brg 
+              <h3> <?=$count_barang_kosong->hasil?> Brg 
 
               </h3>
 
@@ -43,7 +39,7 @@
             <div class="icon">
               <i class="fa fa-cube"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+           
           </div>
         </div>
 
@@ -52,13 +48,13 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>Orang</h3>
+              <h3><?=$count_karyawan->hasil?> Org</h3>
               <p>Karyawan</p>
             </div>
             <div class="icon">
               <i class="fa fa-users"></i>
             </div>
-            <a href="<?php echo base_url("admin/data_siswa") ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            
           </div>
         </div>
         <!-- ./col -->

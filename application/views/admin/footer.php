@@ -26,5 +26,7 @@
 </script>
 
 
+   <?=$this->session->flashdata('pesan')?>   
+
 </body>
 </html>

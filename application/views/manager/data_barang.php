@@ -4,7 +4,7 @@
       <div class="col-md-12">
          <div class="box">
             <div class="box-header">
-              <h4>Data Barang</h4>
+              <h4>Laporan Barang</h4>
            
             </div>
             <div class="box-body">
@@ -26,8 +26,8 @@
                   <td><?php echo $b->barcode ?></td>
                   <td><?php echo $b->nama_barang ?></td>
                   <td><?php echo $b->stok ?></td>
-                  <td><?php echo $b->harga_jual ?></td>
-                  <td><?php echo $b->harga_beli ?></td>
+                  <td><?php echo $b->harga_jual== 0 ? '' : number_format($b->harga_jual, 0, ',', '.') ?></td>
+                  <td><?php echo $b->harga_beli== 0 ? '' : number_format($b->harga_beli, 0, ',', '.') ?></td>
                   
               <?php } ?>
               </tbody>

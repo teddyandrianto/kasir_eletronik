@@ -43,16 +43,16 @@
               <li class="user-header">
                 <img src="<?php echo base_url('assets/admin/profile/not-profile-admin.png') ?>" class="img-circle" alt="User Image">
                 <p>
-                  <?php echo $_SESSION['login']['nama_user'] ?> - Admin 
+                  <?php echo $_SESSION['login']['nama_user'] ?> - Manager 
                   <small><?php echo $_SESSION['login']['telpon'] ?></small>
                 </p>
               </li>
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="http://localhost/tka1/admin/setting" class="btn btn-default btn-flat">Profile</a>
+                  <a href="<?=base_url('manager/profile') ?>" class="btn btn-default btn-flat">Profil</a>
                 </div>
                 <div class="pull-right">
-                  <a href="<?php echo base_url('landing') ?>/logout" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="<?php echo base_url('landing') ?>/logout" class="btn btn-default btn-flat">Logout</a>
                 </div>
               </li>
             </ul>
@@ -92,6 +92,17 @@
         <li>
           <a href="<?php echo base_url('Manager/pegawai') ?>">
             <i class="fa fa-users"></i> <span>Pegawai</span>
+          </a>
+        </li>
+         <li class="header">AKUN</li>
+        <li>
+          <a href="<?php echo base_url('Manager/profile') ?>">
+            <i class="fa fa-cog"></i> <span>Profil</span>
+          </a>
+        </li>
+         <li>
+          <a href="<?php echo base_url('landing/logout') ?>">
+            <i class="fa fa-sign-out"></i> <span>Logout</span>
           </a>
         </li>
       </ul>

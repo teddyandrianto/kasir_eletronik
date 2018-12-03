@@ -13,8 +13,16 @@ class Landing extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('login_page');
-	}
+    if(empty($_SESSION['login'])){
+          $this->load->view('login_page');
+        }elseif($_SESSION['login']['status']==2){
+          redirect('manager/index');
+        }elseif($_SESSION['login']['status']==3){
+          redirect('kasir/index');
+        }elseif($_SESSION['login']['status']==1){
+		      redirect('admin/index');
+        }
+    }
 
 	public function login()
  	{

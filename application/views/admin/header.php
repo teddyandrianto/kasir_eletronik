@@ -17,6 +17,8 @@
   <script src="<?php echo base_url('assets/admin')?>/js/jquery-2.2.3.min.js"></script>
   <script src="<?php echo base_url('assets/admin')?>/js/app.js"></script>
 
+
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -47,10 +49,10 @@
               </li>
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="http://localhost/tka1/admin/setting" class="btn btn-default btn-flat">Profile</a>
+                  <a href="<?=base_url('admin/profile') ?>" class="btn btn-default btn-flat">Profil</a>
                 </div>
                 <div class="pull-right">
-                  <a href="<?php echo base_url('landing') ?>/logout" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="<?php echo base_url('landing') ?>/logout" class="btn btn-default btn-flat">Logout</a>
                 </div>
               </li>
             </ul>
@@ -78,18 +80,22 @@
           </a>
         </li>
          <li>
-          <a href="<?php echo base_url('admin/transaksi_tabungan') ?>">
+          <a href="<?php echo base_url('admin/pegawai') ?>">
+            <i class="fa fa-users"></i> <span>Pegawai</span>
+          </a>
+        </li>
+         <li class="header">MAIN PROFIL</li>
+        <li>
+          <a href="<?php echo base_url('admin/profile') ?>">
             <i class="fa fa-cog"></i> <span>Profil</span>
           </a>
         </li>
          <li>
-          <a href="<?php echo base_url('admin/user') ?>">
-            <i class="fa fa-users"></i> <span>Pegawai</span>
+          <a href="<?php echo base_url('landing/logout') ?>">
+            <i class="fa fa-sign-out"></i> <span>Logout</span>
           </a>
         </li>
       </ul>
 
     </section>
-  </aside>
-
-   <?=$this->session->flashdata('pesan')?>   
+  </aside>   

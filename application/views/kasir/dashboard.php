@@ -27,15 +27,15 @@
                   <label>Tanggal</label>
               </div>
               <div class="col-sm-9">
-                  <p>: <?php echo date("d-m-Y H:i:s")?></p>
+                  <p>: <?php echo date("d-m-Y")?> <span  id="watch"></span></p>
               </div>
               <div class="col-sm-3">
                 <label>Total bayar</label>
               </div>
                 <div class="col-sm-6">
-                  <?php   $data_jumlah_bayar = $this->db->query("SELECT SUM(harga_jual) AS bayar FROM tbl_detail_transaksi WHERE tbl_detail_transaksi.id_transaksi='".$trx->id_transaksi."' ")->row();
+                  <?php   $data_jumlah_bayar = $this->db->query("SELECT SUM(harga_jual*jumlah) AS bayar FROM tbl_detail_transaksi WHERE tbl_detail_transaksi.id_transaksi='".$trx->id_transaksi."' ")->row();
                   $no=1;?>
-                  <input type="text" class="form-control input-lg" id="text" value="<?php echo $data_jumlah_bayar->bayar ?>" name="text" readonly>
+                  <input type="text" class="form-control input-lg" id="text" value="<?php echo $data_jumlah_bayar->bayar== 0 ? '' : number_format($data_jumlah_bayar->bayar, 0, ',', '.') ?>" name="text" readonly>
                 </div>
               
             </div>  
@@ -63,7 +63,7 @@
             </div> 
             <button style="margin-left: 30px;margin-right: 150px;" class="btn btn-success pull-right">Selesai</button>
             </form>
-          <a style="margin-right: : 10px" class="btn btn-danger pull-right" href="">Batal</a>
+          <a style="margin-right: : 10px" class="btn btn-danger pull-right" href="<?php echo base_url('Kasir/batal_transaksi/').$trx->id_transaksi ?>">Batal</a>
           
           </div>
 
@@ -106,9 +106,9 @@
                   <td><?php echo $pmb->barcode ?></td>
                   <td><?php echo $pmb->nama_barang ?></td>
                   <td><?php echo $pmb->jumlah ?></td>
-                  <td><?php echo $pmb->harga_jual ?></td>
-                  <td><?php echo $pmb->harga_jual*$pmb->jumlah ?></td>
-                  <td><center><a class="btn btn-danger btn-xs" href=""><i class="fa fa-times"></i></a></center></td>
+                  <td><?php echo $pmb->harga_jual== 0 ? '' : number_format($pmb->harga_jual, 0, ',', '.') ?></td>
+                  <td><?php echo $pmb->harga_jual*$pmb->jumlah== 0 ? '' : number_format($pmb->harga_jual*$pmb->jumlah, 0, ',', '.')?></td>
+                  <td><center><a class="btn btn-danger btn-xs" href="<?php echo base_url('kasir/hapus_beli/').$pmb->id_detail_tr ?>"><i class="fa fa-times"></i></a></center></td>
                 </tr>
               <?php } ?>
               </tbody>
@@ -165,4 +165,20 @@
         "searching": false
     } );
 } );
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        function clock() {
+          var now = new Date();
+          var secs = ('0' + now.getSeconds()).slice(-2);
+          var mins = ('0' + now.getMinutes()).slice(-2);
+          var hr = now.getHours();
+          var Time = hr + ":" + mins + ":" + secs;
+          document.getElementById("watch").innerHTML = Time;
+          requestAnimationFrame(clock);
+        }
+
+        requestAnimationFrame(clock);
+    });
 </script>

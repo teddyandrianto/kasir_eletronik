@@ -27,8 +27,8 @@
                   <td><?php echo $b->barcode ?></td>
                   <td><?php echo $b->nama_barang ?></td>
                   <td><?php echo $b->stok ?></td>
-                  <td><?php echo $b->harga_jual ?></td>
-                  <td><?php echo $b->harga_beli ?></td>
+                  <td><?php echo $b->harga_jual == 0 ? '' : number_format($b->harga_jual, 0, ',', '.') ?></td>
+                  <td><?php echo $b->harga_beli == 0 ? '' : number_format($b->harga_beli, 0, ',', '.') ?></td>
                   <td><center>
                     <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#ubah<?php echo $b->id_barang?>"><i class="fa fa-edit"></i></button>
                     <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#hapus<?php echo $b->id_barang?>"><i class="fa fa-times"></i></button></center></td>
@@ -36,7 +36,7 @@
                 <div class="modal fade in" id="ubah<?php echo $b->id_barang?>">
                 <div class="modal-dialog">
                   <div class="modal-content">
-                    <form action="<?php echo base_url('admin/ubah_barang/').$b->id_barang?>" method="POST">
+                    <form action="<?php echo base_url('admin/ubah_barang/').$b->id_barang.'/'.$b->barcode?>" method="POST">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span></button>
@@ -45,23 +45,23 @@
                       <div class="modal-body">
                         <div class="form-group">
                           <label>Barcode</label>
-                          <input type="text" class="form-control"  name="barcode" value="<?php echo $b->barcode?>" placeholder="Masukan Barcode">
+                          <input type="text" class="form-control"  name="barcode" value="<?php echo $b->barcode?>" placeholder="Masukan Barcode" required>
                         </div>
                         <div class="form-group">
                           <label>Nama Barang</label>
-                          <input type="text" class="form-control"  name="nama_barang" value="<?php echo $b->nama_barang?>"  placeholder="Masukan Nama Barang">
+                          <input type="text" class="form-control"  name="nama_barang" value="<?php echo $b->nama_barang?>"  placeholder="Masukan Nama Barang" required>
                         </div>
                         <div class="form-group">
                           <label>Harga Beli</label>
-                          <input type="text" class="form-control"  name="harga_beli" value="<?php echo $b->harga_beli?>"  placeholder="Masukan Harga Barang">
+                          <input type="number" class="form-control"  name="harga_beli" value="<?php echo $b->harga_beli?>"  placeholder="Masukan Harga Barang" required min="500">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" required>
                           <label >Harga Jual</label>
-                          <input type="text" class="form-control"  name="harga_jual" value="<?php echo $b->harga_jual?>"  placeholder="Masuakn Harga Jual">
+                          <input type="number" class="form-control"  name="harga_jual" value="<?php echo $b->harga_jual?>"  placeholder="Masuakn Harga Jual" min="500">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" required>
                           <label>Stok</label>
-                          <input type="text" class="form-control"  name="stok" value="<?php echo $b->stok?>"  placeholder="Masukan Stok">
+                          <input type="number" class="form-control"  name="stok" value="<?php echo $b->stok?>"  placeholder="Masukan Stok" min="0">
                         </div>
                       </div>
                       <div class="modal-footer">
@@ -106,23 +106,23 @@
                       <div class="modal-body">
                         <div class="form-group">
                           <label>Barcode</label>
-                          <input type="text" class="form-control"  name="barcode" value="" placeholder="Masukan Barcode">
+                          <input type="text" class="form-control"  name="barcode" value="" placeholder="Masukan Barcode" required>
                         </div>
                         <div class="form-group">
                           <label>Nama Barang</label>
-                          <input type="text" class="form-control"  name="nama_barang"  placeholder="Masukan Nama Barang">
+                          <input type="text" class="form-control"  name="nama_barang"  placeholder="Masukan Nama Barang" required>
                         </div>
                         <div class="form-group">
                           <label>Harga Beli</label>
-                          <input type="text" class="form-control"  name="harga_beli"  placeholder="Masukan Harga Barang">
+                          <input type="number" class="form-control"  name="harga_beli"  placeholder="Masukan Harga Barang" required min="500">
                         </div>
                         <div class="form-group">
                           <label >Harga Jual</label>
-                          <input type="text" class="form-control"  name="harga_jual"  placeholder="Masuakn Harga Jual">
+                          <input type="number" class="form-control"  name="harga_jual"  placeholder="Masuakn Harga Jual" required min="500">
                         </div>
                         <div class="form-group">
                           <label>Stok</label>
-                          <input type="text" class="form-control"  name="stok"  placeholder="Masukan Stok">
+                          <input type="number" class="form-control"  name="stok"  placeholder="Masukan Stok" required min="1">
                         </div>
                       </div>
                       <div class="modal-footer">

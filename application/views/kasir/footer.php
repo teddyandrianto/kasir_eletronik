@@ -1,4 +1,5 @@
 
+   
   <footer class="main-footer aksi">
     <div class="pull-right hidden-xs aksi">
       <b>Version</b> 2.3.6
@@ -23,9 +24,9 @@
         "scrollX": true
     } );
 } );
-</script>
-
-   <?=$this->session->flashdata('pesan')?>      
+</script>     
 
 </body>
 </html>
+
+<?=$this->session->flashdata('pesan')?> 
